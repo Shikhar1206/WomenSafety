@@ -165,13 +165,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun activateSOS() {
 
-        // 1️⃣ Start Emergency Service (SMS + Location)
         ContextCompat.startForegroundService(
             this,
             Intent(this, EmergencyService::class.java)
         )
 
-        // 2️⃣ Enable auto photo capture
         if (ContextCompat.checkSelfPermission(
                 this,
                 Manifest.permission.CAMERA
@@ -183,7 +181,6 @@ class MainActivity : AppCompatActivity() {
             cameraPermissionLauncher.launch(Manifest.permission.CAMERA)
         }
 
-        // 3️⃣ Optional: Fake Call screen
         startActivity(Intent(this, FakeCallActivity::class.java))
 
         Toast.makeText(this, "SOS Activated", Toast.LENGTH_LONG).show()

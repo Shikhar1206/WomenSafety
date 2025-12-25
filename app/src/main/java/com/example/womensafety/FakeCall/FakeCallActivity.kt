@@ -19,7 +19,8 @@ class FakeCallActivity : AppCompatActivity() {
         player.start()
 
         findViewById<View>(R.id.btnAnswer).setOnClickListener {
-            findViewById<TextView>(R.id.tvCallStatus).text = "Call in progress"
+            findViewById<TextView>(R.id.tvIncoming).text = "Call in progress"
+            player.stop()
         }
 
         findViewById<View>(R.id.btnEndCall).setOnClickListener {

@@ -31,8 +31,8 @@ class ContactsActivity : AppCompatActivity() {
                         EmergencyContactEntity(name = name, phone = phone)
                     )
                 }
-                binding.etName.text.clear()
-                binding.etPhone.text.clear()
+                binding.etName.text?.clear()
+                binding.etPhone.text?.clear()
             }
         }
     }

@@ -5,8 +5,8 @@ import android.content.Context
 import android.content.Intent
 import android.os.BatteryManager
 import android.util.Log
-import com.example.womensafety.util.LocationHelper
-import com.example.womensafety.util.SmsUtil
+//import com.example.womensafety.util.LocationHelper
+//import com.example.womensafety.util.SmsUtil
 
 class BatteryReceiver : BroadcastReceiver() {
 

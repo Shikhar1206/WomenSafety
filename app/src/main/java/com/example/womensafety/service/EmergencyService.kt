@@ -10,8 +10,8 @@ import android.os.Build
 import android.os.IBinder
 import androidx.core.app.NotificationCompat
 import com.example.womensafety.sensor.ShakeDetector
-import com.example.womensafety.util.LocationHelper
-import com.example.womensafety.util.SmsUtil
+//import com.example.womensafety.util.LocationHelper
+//import com.example.womensafety.util.SmsUtil
 
 class EmergencyService : Service() {
 

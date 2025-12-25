@@ -44,6 +44,11 @@ class MainActivity : AppCompatActivity() {
             )
         }
 
+        ContextCompat.startForegroundService(
+            this,
+            Intent(this, EmergencyService::class.java)
+        )
+
     }
 
     private fun requestPermissions() {

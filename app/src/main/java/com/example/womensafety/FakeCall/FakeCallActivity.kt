@@ -2,6 +2,8 @@ package com.example.womensafety.fakecall
 
 import android.media.MediaPlayer
 import android.os.Bundle
+import android.view.View
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.womensafety.R
 
@@ -15,6 +17,15 @@ class FakeCallActivity : AppCompatActivity() {
 
         player = MediaPlayer.create(this, R.raw.ringtone)
         player.start()
+
+        findViewById<View>(R.id.btnAnswer).setOnClickListener {
+            findViewById<TextView>(R.id.tvCallStatus).text = "Call in progress"
+        }
+
+        findViewById<View>(R.id.btnEndCall).setOnClickListener {
+            finish()
+        }
+
     }
 
     override fun onDestroy() {

@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.example.womensafety.databinding.ActivityContactsBinding
+import com.example.womensafety.room.AppDatabase
 import com.example.womensafety.room.EmergencyContactEntity
 import kotlinx.coroutines.launch
 

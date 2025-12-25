@@ -3,7 +3,10 @@ package com.example.womensafety.ui
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
+import android.util.Log.d
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -11,12 +14,28 @@ import com.example.womensafety.contacts.ContactsActivity
 import com.example.womensafety.databinding.ActivityMainBinding
 import com.example.womensafety.service.EmergencyService
 import com.example.womensafety.fakecall.FakeCallActivity
+import com.example.womensafety.service.PhotoCaptureService
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private val permissionLauncher = registerForActivityResult(ActivityResultContracts
         .RequestMultiplePermissions()) {}
+
+    private val cameraPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+            if (isGranted) {
+                startPhotoCaptureService()
+            } else {
+                Toast.makeText(
+                    this,
+                    "Camera permission required for auto capture",
+                    Toast.LENGTH_SHORT
+                ).show()
+                binding.switchAutoCapture.isChecked = false
+            }
+        }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,10 +45,21 @@ class MainActivity : AppCompatActivity() {
         requestPermissions()
 
         binding.btnSOS.setOnClickListener {
-            ContextCompat.startForegroundService(
-                this,
-                Intent(this, EmergencyService::class.java)
-            )
+//            ContextCompat.startForegroundService(
+//                this,
+//                Intent(this, EmergencyService::class.java)
+//            )
+//            startActivity(
+//                Intent(this, FakeCallActivity::class.java)
+//            )
+//            binding.switchAutoCapture.setOnCheckedChangeListener { _, isChecked ->
+//                if (isChecked) {
+//                    checkAndStartCamera()
+//                } else {
+//                    stopPhotoCaptureService()
+//                }
+//            }
+            activateSOS()
         }
 
         binding.btnFakeCall.setOnClickListener {
@@ -44,11 +74,31 @@ class MainActivity : AppCompatActivity() {
             )
         }
 
-        ContextCompat.startForegroundService(
-            this,
-            Intent(this, EmergencyService::class.java)
-        )
+//        ContextCompat.startForegroundService(
+//            this,
+//            Intent(this, EmergencyService::class.java)
+//        )
+//        binding.btnStartService.setOnClickListener {
+//            ContextCompat.startForegroundService(
+//                this,
+//                Intent(this, EmergencyService::class.java)
+//            )
+//        }
 
+        binding.switchAutoCapture.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                checkAndStartCamera()
+            } else {
+                stopPhotoCaptureService()
+            }
+        }
+
+        binding.btnStartService.setOnClickListener{
+            ContextCompat.startForegroundService(
+                this,
+                Intent(this, EmergencyService::class.java)
+            )
+        }
     }
 
     private fun requestPermissions() {
@@ -72,6 +122,74 @@ class MainActivity : AppCompatActivity() {
             permissionLauncher.launch(permissions.toTypedArray())
         }
     }
+
+    private fun checkAndStartCamera() {
+        when {
+            ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.CAMERA
+            ) == PackageManager.PERMISSION_GRANTED -> {
+                startPhotoCaptureService()
+            }
+            else -> {
+                cameraPermissionLauncher.launch(Manifest.permission.CAMERA)
+            }
+        }
+    }
+
+    private fun startPhotoCaptureService() {
+        val intent = Intent(this, PhotoCaptureService::class.java)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            startForegroundService(intent)
+        } else {
+            startService(intent)
+        }
+
+        Toast.makeText(
+            this,
+            "Auto photo capture enabled",
+            Toast.LENGTH_SHORT
+        ).show()
+    }
+
+    private fun stopPhotoCaptureService() {
+        stopService(Intent(this, PhotoCaptureService::class.java))
+
+        Toast.makeText(
+            this,
+            "Auto photo capture disabled",
+            Toast.LENGTH_SHORT
+        ).show()
+    }
+
+    private fun activateSOS() {
+
+        // 1️⃣ Start Emergency Service (SMS + Location)
+        ContextCompat.startForegroundService(
+            this,
+            Intent(this, EmergencyService::class.java)
+        )
+
+        // 2️⃣ Enable auto photo capture
+        if (ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.CAMERA
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            startPhotoCaptureService()
+            binding.switchAutoCapture.isChecked = true
+        } else {
+            cameraPermissionLauncher.launch(Manifest.permission.CAMERA)
+        }
+
+        // 3️⃣ Optional: Fake Call screen
+        startActivity(Intent(this, FakeCallActivity::class.java))
+
+        Toast.makeText(this, "SOS Activated", Toast.LENGTH_LONG).show()
+    }
+
+
 
 }
 

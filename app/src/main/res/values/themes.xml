@@ -1,7 +1,6 @@
 <resources>
 
-    <style name="Theme.WomenSafety" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize if needed -->
+    <style name="Theme.WomenSafety" parent="Theme.MaterialComponents.DayNight.NoActionBar">
     </style>
 
 </resources>

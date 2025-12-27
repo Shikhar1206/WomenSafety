@@ -10,7 +10,9 @@
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
+
 
 
     <application
@@ -22,10 +24,10 @@
             android:name=".ui.MainActivity"
             android:exported="true">
 
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN"/>-->
+<!--                <category android:name="android.intent.category.LAUNCHER"/>-->
+<!--            </intent-filter>-->
 
         </activity>
 
@@ -35,6 +37,17 @@
         <activity
             android:name=".contacts.ContactsActivity"
             android:exported="false" />
+
+        <activity
+            android:name=".ui.CalendarActivity"
+            android:exported="true">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+
 
 
         <receiver
@@ -64,6 +77,12 @@
             android:name=".service.PhotoCaptureService"
             android:foregroundServiceType="camera"
             android:exported="false"/>
+
+        <service
+            android:name=".service.SafeWordService"
+            android:exported="false"
+            android:foregroundServiceType="microphone"/>
+
 
 
     </application>

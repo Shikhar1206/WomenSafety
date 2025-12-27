@@ -1,6 +1,7 @@
 package com.example.womensafety.ui
 
 import android.Manifest
+import android.R
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
@@ -15,6 +16,8 @@ import com.example.womensafety.databinding.ActivityMainBinding
 import com.example.womensafety.service.EmergencyService
 import com.example.womensafety.fakecall.FakeCallActivity
 import com.example.womensafety.service.PhotoCaptureService
+import com.example.womensafety.service.SafeWordService
+import com.example.womensafety.util.SirenUtil
 
 class MainActivity : AppCompatActivity() {
 
@@ -99,7 +102,54 @@ class MainActivity : AppCompatActivity() {
                 Intent(this, EmergencyService::class.java)
             )
         }
+
+        binding.btnSiren.setOnClickListener {
+            if (SirenUtil.isPlaying()) {
+                SirenUtil.stopSiren()
+                Toast.makeText(this, "Siren stopped", Toast.LENGTH_SHORT).show()
+            } else {
+                SirenUtil.startSiren(this)
+                Toast.makeText(this, "Emergency siren activated", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        binding.btnSafeWord.setOnClickListener {
+            if (ContextCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.RECORD_AUDIO
+                ) == PackageManager.PERMISSION_GRANTED
+            ) {
+                startSafeWordService()
+            } else {
+                audioPermissionLauncher.launch(Manifest.permission.RECORD_AUDIO)
+            }
+
+            binding.btnSafeWord.backgroundTintList =
+                ContextCompat.getColorStateList(
+                    this,
+                    android.R.color.holo_green_dark
+                )
+
+        }
+
+
+
     }
+
+    private fun startSafeWordService() {
+        val intent = Intent(this, SafeWordService::class.java)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            startForegroundService(intent)
+        } else {
+            startService(intent)
+        }
+        Toast.makeText(this, "Safe word listening enabled", Toast.LENGTH_SHORT).show()
+    }
+
+    private val audioPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
+            if (granted) startSafeWordService()
+        }
 
     private fun requestPermissions() {
         val permissions = mutableListOf(
@@ -165,6 +215,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun activateSOS() {
 
+        SirenUtil.startSiren(this)
+
         ContextCompat.startForegroundService(
             this,
             Intent(this, EmergencyService::class.java)
@@ -181,10 +233,11 @@ class MainActivity : AppCompatActivity() {
             cameraPermissionLauncher.launch(Manifest.permission.CAMERA)
         }
 
-        startActivity(Intent(this, FakeCallActivity::class.java))
+//        startActivity(Intent(this, FakeCallActivity::class.java))
 
         Toast.makeText(this, "SOS Activated", Toast.LENGTH_LONG).show()
     }
+
 
 
 

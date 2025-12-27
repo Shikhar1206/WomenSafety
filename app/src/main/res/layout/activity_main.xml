@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F9FAFB"
@@ -86,14 +87,14 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnStartService"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Activate Safety Service"
-                app:icon="@drawable/ic_shield"
-                app:iconGravity="textStart"
-                app:cornerRadius="12dp"/>
+<!--            <com.google.android.material.button.MaterialButton-->
+<!--                android:id="@+id/btnStartService"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Activate Safety Service"-->
+<!--                app:icon="@drawable/ic_shield"-->
+<!--                app:iconGravity="textStart"-->
+<!--                app:cornerRadius="12dp"/>-->
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnContacts"
@@ -115,7 +116,31 @@
                 app:iconGravity="textStart"
                 app:cornerRadius="12dp"/>
 
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSiren"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Loud Siren"
+                android:layout_marginTop="12dp"
+                app:icon="@drawable/ic_siren"
+                app:iconGravity="textStart"
+                app:cornerRadius="12dp"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSafeWord"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Audio Detection"
+                android:onClick=""
+                android:layout_marginTop="12dp"
+                app:icon="@drawable/ic_voice"
+                app:iconGravity="textStart"
+                app:cornerRadius="12dp"/>
+
+
         </LinearLayout>
+
+
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView

@@ -39,7 +39,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -48,20 +47,6 @@ class MainActivity : AppCompatActivity() {
         requestPermissions()
 
         binding.btnSOS.setOnClickListener {
-//            ContextCompat.startForegroundService(
-//                this,
-//                Intent(this, EmergencyService::class.java)
-//            )
-//            startActivity(
-//                Intent(this, FakeCallActivity::class.java)
-//            )
-//            binding.switchAutoCapture.setOnCheckedChangeListener { _, isChecked ->
-//                if (isChecked) {
-//                    checkAndStartCamera()
-//                } else {
-//                    stopPhotoCaptureService()
-//                }
-//            }
             activateSOS()
         }
 
@@ -77,30 +62,12 @@ class MainActivity : AppCompatActivity() {
             )
         }
 
-//        ContextCompat.startForegroundService(
-//            this,
-//            Intent(this, EmergencyService::class.java)
-//        )
-//        binding.btnStartService.setOnClickListener {
-//            ContextCompat.startForegroundService(
-//                this,
-//                Intent(this, EmergencyService::class.java)
-//            )
-//        }
-
         binding.switchAutoCapture.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 checkAndStartCamera()
             } else {
                 stopPhotoCaptureService()
             }
-        }
-
-        binding.btnStartService.setOnClickListener{
-            ContextCompat.startForegroundService(
-                this,
-                Intent(this, EmergencyService::class.java)
-            )
         }
 
         binding.btnSiren.setOnClickListener {
@@ -127,13 +94,10 @@ class MainActivity : AppCompatActivity() {
             binding.btnSafeWord.backgroundTintList =
                 ContextCompat.getColorStateList(
                     this,
-                    android.R.color.holo_green_dark
+                    R.color.holo_green_dark
                 )
 
         }
-
-
-
     }
 
     private fun startSafeWordService() {

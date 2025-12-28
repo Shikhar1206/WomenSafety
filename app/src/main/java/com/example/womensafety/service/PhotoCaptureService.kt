@@ -30,7 +30,6 @@ class PhotoCaptureService : LifecycleService() {
         }
     }
 
-
     override fun onCreate() {
         super.onCreate()
         startForeground(101, buildNotification())

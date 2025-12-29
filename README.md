@@ -47,12 +47,12 @@ Shikhar Agarwal
 B.Tech (CSAI) – IIIT Lucknow
 
 ### Calendar Lock Screen
-![Calendar](screenshots/pseudocalendar.jpeg)
+![Calendar](./pseudocalendar.jpeg)
 
 ### Home Screen
-![Home](screenshots/homepage.jpeg)
+![Home](./homepage.jpeg)
 
 ### Fake Call
-![Fake Call](screenshots/fakecall.jpeg)
+![Fake Call](./fakecall.jpeg)
 
 

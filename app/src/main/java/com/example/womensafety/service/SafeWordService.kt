@@ -24,6 +24,8 @@ import android.os.Handler
 import android.os.Looper
 import androidx.core.content.ContextCompat
 import android.Manifest
+import android.app.PendingIntent
+
 
 class SafeWordService : Service() {
 
@@ -120,7 +122,7 @@ class SafeWordService : Service() {
             val channel = NotificationChannel(
                 channelId,
                 "Safe Word Listening",
-                NotificationManager.IMPORTANCE_LOW
+                NotificationManager.IMPORTANCE_HIGH
             )
             getSystemService(NotificationManager::class.java)
                 .createNotificationChannel(channel)
@@ -150,10 +152,31 @@ class SafeWordService : Service() {
             "Safe word activated"
         )
 
-        val callIntent = Intent(Intent.ACTION_CALL).apply {
+        val callIntent = Intent(Intent.ACTION_DIAL).apply {
             data = Uri.parse("tel:112")
-            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK
         }
+
+        val pendingIntent = PendingIntent.getActivity(
+            this,
+            0,
+            callIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+
+        val notification = NotificationCompat.Builder(this, "SAFE_WORD_CHANNEL")
+            .setSmallIcon(android.R.drawable.ic_dialog_alert)
+            .setContentTitle("Emergency Detected")
+            .setContentText("Tap to call 112 immediately")
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setCategory(NotificationCompat.CATEGORY_CALL)
+            .setContentIntent(pendingIntent)
+            .setFullScreenIntent(pendingIntent, true)
+            .setAutoCancel(true)
+            .build()
+
+        val manager = getSystemService(NotificationManager::class.java)
+        manager.notify(999, notification)
 
         if (ContextCompat.checkSelfPermission(
                 this,

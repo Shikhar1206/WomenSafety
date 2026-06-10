@@ -1,6 +1,13 @@
 <resources>
-
-    <style name="Theme.WomenSafety" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <!-- Base theme for XML-based activities (CalendarActivity, FakeCallActivity) -->
+    <style name="Theme.WomenSafety" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/trust_purple</item>
+        <item name="colorPrimaryVariant">@color/trust_purple_dark</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorSecondary">@color/safety_red</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <item name="android:windowBackground">@color/background_dark</item>
+        <item name="android:statusBarColor">@color/background_dark</item>
+        <item name="android:navigationBarColor">@color/background_dark</item>
     </style>
-
 </resources>

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1027189607343",
+    "project_id": "smartify-1d4cb",
+    "storage_bucket": "smartify-1d4cb.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1027189607343:android:e197da612051901ffc3d5a",
+        "android_client_info": {
+          "package_name": "com.example.womensafety"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB7EOPDy7j9R7J38KqLaSudS6lJYtwLiuc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

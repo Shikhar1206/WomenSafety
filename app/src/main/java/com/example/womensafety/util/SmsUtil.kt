@@ -1,40 +1,29 @@
+package com.example.womensafety.util
+
 import android.content.Context
 import android.telephony.SmsManager
-import com.example.womensafety.room.AppDatabase
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import timber.log.Timber
+
+/**
+ * Fixed: Added missing package declaration.
+ * Fixed: Replaced deprecated SmsManager.getDefault() with context.getSystemService().
+ * Fixed: Added divideMessage for messages > 160 chars.
+ */
 
 object SmsUtil {
 
-    fun sendSOS(context: Context, location: String) {
-
-        CoroutineScope(Dispatchers.IO).launch {
-
-            val appContext = context.applicationContext
-
-            val contacts = AppDatabase
-                .getDatabase(appContext)
-                .contactDao()
-                .getAll()
-
-            if (contacts.isEmpty()) return@launch
-
-            val smsManager = SmsManager.getDefault()
-            val message =
-                "🚨 EMERGENCY!\nI am in danger.\nLocation:\n$location"
-
+    fun sendSms(context: Context, phone: String, message: String) {
+        try {
+            val smsManager = context.getSystemService(SmsManager::class.java)
             val parts = smsManager.divideMessage(message)
-
-            contacts.forEach {
-                smsManager.sendMultipartTextMessage(
-                    it.phone,
-                    null,
-                    parts,
-                    null,
-                    null
-                )
-            }
+            smsManager.sendMultipartTextMessage(phone, null, parts, null, null)
+            Timber.d("SMS sent to $phone")
+        } catch (e: Exception) {
+            Timber.e(e, "Failed to send SMS to $phone")
         }
+    }
+
+    fun sendSmsToAll(context: Context, phones: List<String>, message: String) {
+        phones.forEach { phone -> sendSms(context, phone, message) }
     }
 }

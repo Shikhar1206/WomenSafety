@@ -1,21 +1,53 @@
 # Add project specific ProGuard rules here.
-# You can control the set of applied configuration files using the
-# proguardFiles setting in build.gradle.
-#
-# For more details, see
-#   http://developer.android.com/guide/developing/tools/proguard.html
 
-# If your project uses WebView with JS, uncomment the following
-# and specify the fully qualified class name to the JavaScript interface
-# class:
-#-keepclassmembers class fqcn.of.javascript.interface.for.webview {
-#   public *;
-#}
+# ── Kotlin ────────────────────────────────────────────────────────────────────
+-keepclassmembers class **$WhenMappings { <fields>; }
+-keepclassmembers class kotlin.Metadata { *; }
 
-# Uncomment this to preserve the line number information for
-# debugging stack traces.
-#-keepattributes SourceFile,LineNumberTable
+# ── Room Database ─────────────────────────────────────────────────────────────
+-keep class * extends androidx.room.RoomDatabase { *; }
+-keepclassmembers @androidx.room.Entity class * { *; }
+-keepclassmembers @androidx.room.Dao interface * { *; }
+-keep interface * extends androidx.room.RoomDatabase { *; }
 
-# If you keep the line number information, uncomment this to
-# hide the original source file name.
-#-renamesourcefileattribute SourceFile
+# ── Firebase ──────────────────────────────────────────────────────────────────
+-keep class com.google.firebase.** { *; }
+-keep class com.google.android.gms.** { *; }
+-dontwarn com.google.firebase.**
+-dontwarn com.google.android.gms.**
+
+# ── Hilt ──────────────────────────────────────────────────────────────────────
+-keep class dagger.hilt.** { *; }
+-keepclassmembers class * {
+    @dagger.hilt.android.lifecycle.HiltViewModel *;
+}
+
+# ── Data Classes (keep for Firestore serialization) ───────────────────────────
+-keepclassmembers class com.example.womensafety.data.** { *; }
+-keepclassmembers class com.example.womensafety.domain.model.** { *; }
+
+# ── Coroutines ────────────────────────────────────────────────────────────────
+-keepnames class kotlinx.coroutines.internal.MainDispatcherFactory {}
+-keepnames class kotlinx.coroutines.CoroutineExceptionHandler {}
+-keepclassmembers class kotlin.coroutines.SafeContinuation {
+    volatile <fields>;
+}
+
+# ── WorkManager ───────────────────────────────────────────────────────────────
+-keep class * extends androidx.work.Worker { *; }
+-keep class * extends androidx.work.CoroutineWorker { *; }
+-keep class * extends androidx.work.ListenableWorker { *; }
+
+# ── Timber ────────────────────────────────────────────────────────────────────
+-dontwarn org.jetbrains.annotations.**
+
+# ── Keep serializable classes ─────────────────────────────────────────────────
+-keepclassmembers class * implements java.io.Serializable {
+    static final long serialVersionUID;
+    private static final java.io.ObjectStreamField[] serialPersistentFields;
+    !static !transient <fields>;
+    private void writeObject(java.io.ObjectOutputStream);
+    private void readObject(java.io.ObjectInputStream);
+    java.lang.Object writeReplace();
+    java.lang.Object readResolve();
+}

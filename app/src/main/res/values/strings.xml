@@ -1,4 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- App -->
     <string name="app_name">Smartify</string>
+
+    <!-- SOS -->
+    <string name="sos_button">SOS</string>
+    <string name="sos_hint">Shake your phone anytime to send SOS</string>
+    <string name="sos_active">SOS is active — help is on the way</string>
+    <string name="sos_countdown">Sending SOS in %1$d seconds…</string>
+    <string name="sos_cancel">Cancel</string>
+    <string name="sos_activated">🚨 SOS Activated</string>
+    <string name="sos_cancelled">SOS Cancelled</string>
+
+    <!-- Emergency Contacts -->
+    <string name="contacts_title">Emergency Contacts</string>
+    <string name="add_contact">Add Contact</string>
+    <string name="edit_contact">Edit Contact</string>
+    <string name="delete_contact">Remove Contact</string>
+    <string name="contact_name_hint">Full Name</string>
+    <string name="contact_phone_hint">Phone Number</string>
+    <string name="no_contacts">No emergency contacts added</string>
+    <string name="no_contacts_desc">Add contacts so they receive SOS alerts</string>
+    <string name="duplicate_contact">Contact with this phone number already exists</string>
+    <string name="contact_added">%1$s added successfully</string>
+    <string name="contact_removed">%1$s removed</string>
+    <string name="confirm_delete_contact">Remove %1$s from emergency contacts?</string>
+
+    <!-- Auth -->
+    <string name="login_title">Welcome Back</string>
+    <string name="signup_title">Create Account</string>
+    <string name="email_hint">Email</string>
+    <string name="password_hint">Password</string>
+    <string name="confirm_password_hint">Confirm Password</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="send_reset_link">Send Reset Link</string>
+    <string name="sign_in">Sign In</string>
+    <string name="sign_up">Create Account</string>
+    <string name="no_account">Don\'t have an account?</string>
+    <string name="already_account">Already have an account?</string>
+
+    <!-- Features -->
+    <string name="fake_call">Fake Call</string>
+    <string name="siren">Loud Siren</string>
+    <string name="safe_word">Voice Detection</string>
+    <string name="auto_capture">Auto Capture</string>
+    <string name="safe_map">Safe Map</string>
+    <string name="sos_history">SOS History</string>
+    <string name="settings">Settings</string>
+
+    <!-- Notifications -->
+    <string name="notif_emergency_title">🛡️ Smartify Active</string>
+    <string name="notif_emergency_text">Shake detection on • You\'re protected</string>
+    <string name="notif_photo_title">Smartify</string>
+    <string name="notif_photo_text">Evidence capture active</string>
+    <string name="notif_safe_word_title">Smartify Active</string>
+    <string name="notif_safe_word_text">Listening for safe word…</string>
+
+    <!-- Errors -->
+    <string name="error_name_too_short">Name must be at least 2 characters</string>
+    <string name="error_invalid_phone">Please enter a valid phone number</string>
+    <string name="error_passwords_no_match">Passwords do not match</string>
+    <string name="error_password_too_short">Password must be at least 6 characters</string>
+    <string name="error_generic">Something went wrong. Please try again.</string>
 </resources>

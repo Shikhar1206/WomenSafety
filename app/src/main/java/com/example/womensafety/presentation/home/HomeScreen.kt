@@ -2,6 +2,9 @@ package com.example.womensafety.presentation.home
 
 import android.content.Intent
 import android.Manifest
+import android.media.MediaPlayer
+import androidx.compose.foundation.lazy.grid.GridItemSpan
+import com.example.womensafety.R
 import android.content.pm.PackageManager
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -54,6 +57,41 @@ fun HomeScreen(
     val contactCount by viewModel.contactCount.collectAsState()
     val prefs by viewModel.userPreferences.collectAsState()
     val context = LocalContext.current
+
+    // Siren state
+    var isSirenPlaying by remember { mutableStateOf(false) }
+    var mediaPlayer by remember { mutableStateOf<MediaPlayer?>(null) }
+
+    val toggleSiren = {
+        if (isSirenPlaying) {
+            try {
+                mediaPlayer?.stop()
+                mediaPlayer?.release()
+            } catch (e: Exception) {
+                Timber.e(e, "Error stopping media player")
+            }
+            mediaPlayer = null
+            isSirenPlaying = false
+        } else {
+            mediaPlayer = MediaPlayer.create(context, R.raw.siren).apply {
+                isLooping = true
+                setVolume(1.0f, 1.0f)
+                start()
+            }
+            isSirenPlaying = true
+        }
+    }
+
+    DisposableEffect(Unit) {
+        onDispose {
+            try {
+                mediaPlayer?.stop()
+                mediaPlayer?.release()
+            } catch (e: Exception) {
+                Timber.e(e, "Error disposing media player")
+            }
+        }
+    }
 
     val permissionsLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestMultiplePermissions()
@@ -122,6 +160,25 @@ fun HomeScreen(
                     radius = 300.dp.toPx()
                 ),
                 center = center.copy(x = center.x - driftX.dp.toPx(), y = center.y + driftY.dp.toPx())
+            )
+        }
+
+        // Flashing police lights overlay when siren is playing
+        if (isSirenPlaying) {
+            val sirenTransition = rememberInfiniteTransition(label = "siren_lights")
+            val overlayColor by sirenTransition.animateColor(
+                initialValue = Color.Red.copy(alpha = 0.12f),
+                targetValue = Color.Blue.copy(alpha = 0.12f),
+                animationSpec = infiniteRepeatable(
+                    animation = tween(400, easing = LinearEasing),
+                    repeatMode = RepeatMode.Reverse
+                ),
+                label = "overlayColor"
+            )
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(overlayColor)
             )
         }
 
@@ -287,6 +344,14 @@ fun HomeScreen(
                 }
                 item {
                     QuickActionCard("Safe Map", Icons.Default.Map, ElectricBlue, onNavigateToMap)
+                }
+                item(span = { GridItemSpan(maxLineSpan) }) {
+                    QuickActionCard(
+                        title = if (isSirenPlaying) "Stop Siren" else "Siren (Loud)",
+                        icon = if (isSirenPlaying) Icons.Default.VolumeOff else Icons.Default.VolumeUp,
+                        color = if (isSirenPlaying) SafetyRed else WarmPinkLight,
+                        onClick = toggleSiren
+                    )
                 }
             }
 

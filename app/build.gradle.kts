@@ -8,6 +8,15 @@ plugins {
     alias(libs.plugins.firebase.crashlytics)
 }
 
+// Read local.properties config
+val localProperties = java.util.Properties().apply {
+    val localPropertiesFile = rootProject.file("local.properties")
+    if (localPropertiesFile.exists()) {
+        localPropertiesFile.inputStream().use { load(it) }
+    }
+}
+val mapsApiKey = localProperties.getProperty("MAPS_API_KEY") ?: ""
+
 android {
     namespace = "com.example.womensafety"
     compileSdk = 35
@@ -19,6 +28,7 @@ android {
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        manifestPlaceholders["MAPS_API_KEY"] = mapsApiKey
     }
 
     buildTypes {

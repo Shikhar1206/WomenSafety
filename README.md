@@ -1,58 +1,66 @@
-                                            Smartify – Android Personal Safety App
+                                               Smartify – Android Personal Safety App
 
-Smartify is a Kotlin-based Android safety application designed to assist women and children during emergency situations.
-The app combines intelligent triggers, background-safe execution, and stealth UI techniques to provide quick and reliable emergency assistance.
+#  Smartify 
 
-✨ Features
+**Smartify** is a Kotlin-based Android safety application designed to assist women and children during emergency situations. The app combines intelligent triggers, background-safe execution, and stealth UI techniques to provide quick, reliable, and covert emergency assistance.
 
-📆 Calendar Lock
+---
 
-App opens with a calendar interface.
-The safety dashboard is revealed only on specific date interaction(13 in our case), providing privacy and stealth.
+## ✨ Features
 
-📞 Fake Call Simulation
+### 📆 Calendar Lock (Stealth Dashboard)
+To ensure privacy and safety from potential aggressors, the app launches with a fully functional **Calendar** interface. 
+* The actual safety dashboard and settings are hidden.
+* The dashboard is revealed **only** when the user performs a specific interaction (custom date).
 
-Simulates a realistic incoming call to help users escape unsafe or uncomfortable situations.
+### 🗣️ Safe Word Detection (Background Listening)
+Continuously listens for predefined safe words (e.g., *“help”*, *“emergency”*, *“save me”*) in the background. Once a safe word is detected:
+1. **Sends SOS Messages**: Sends an SMS with the user's real-time GPS location coordinates to pre-configured emergency contacts.
+2. **Triggers Emergency UI**: Displays a full-screen emergency notification.
+3. **Quick Call**: Enables a one-tap call to emergency services (**112**).
 
-📸 Automatic Photo Capture
+### 📞 Fake Call Simulation
+Simulates a highly realistic incoming call screen (with customizable caller name, number, and ringtone) to help users politely and safely escape uncomfortable or potentially unsafe social situations.
 
-Periodically captures photos for evidence collection when enabled.
+### 📸 Automatic Photo Capture
+When enabled, the app uses the device camera to periodically capture photos in the background, providing crucial visual evidence for safety and legal protection.
 
-🗣️ Safe Word Detection (Background Listening)
+### 🗺️ Real-time Location & Map Integration
+Integrates Google Maps to display the user's current location and nearby help centers. Accurate coordinates are instantly fetched and appended to SOS messages.
 
-Continuously listens for predefined safe words (e.g. help, emergency, save me).
-On detection:
--> Sends SOS message.
--> Shows a full-screen emergency notification.
--> Enables one-tap call to 112.
+---
 
-🎨 Modern Material UI
+## 📸 Screenshots
 
-Clean, responsive UI using Material Components Day/Night theme.
+| 📆 Calendar Lock Screen | 🏠 Home Dashboard | 📞 Fake Call Simulator |
+| :---: | :---: | :---: |
+| ![Calendar](screenshots/PseudoCalendar.jpeg) | ![Home](screenshots/HomePage.jpeg) | ![Fake Call](screenshots/FakeCall.jpeg) |
 
+---
 
-🧠 Technical Highlights
+## 🧠 Technical Highlights & Stack
 
-Language: Kotlin
+Smartify is built using modern Android development practices, ensuring high performance, battery efficiency, and compliance with the latest Android background execution limits.
 
-Architecture: Foreground Services + Activities
+* **Language**: [Kotlin](https://kotlinlang.org/)
+* **UI Framework**: [Jetpack Compose](https://developer.android.com/jetpack/compose) (Material 3 Components)
+* **Architecture**: Clean Architecture with MVVM (Model-View-ViewModel) pattern
+* **Dependency Injection**: [Hilt (Dagger)](https://developer.android.com/training/dependency-injection/hilt-android)
+* **Local Database**: [Room Database](https://developer.android.com/training/data-storage/room) (for contacts and logs)
+* **Data Storage**: [DataStore Preferences](https://developer.android.com/topic/libraries/architecture/datastore) (for user settings)
+* **Background Processing**:
+  * **Foreground Services** for continuous safe-word listening and location tracking
+  * **WorkManager** for scheduled or deferred background tasks
+* **Camera Integration**: [CameraX API](https://developer.android.com/training/camerax) for background evidence capture
+* **Location & Maps**: Google Play Services Location & [Maps Compose](https://github.com/googlemaps/android-maps-compose)
+* **Backend Services**: [Firebase Suite](https://firebase.google.com/) (Auth, Firestore, Cloud Messaging, Storage, Crashlytics, Analytics)
 
-Android background execution compliant
+---
 
-Permission-aware and security-focused design
+## 👨‍💻 Developer
 
-👨‍💻 Developer
+**Shikhar Agarwal**  
+🎓 B.Tech in Computer Science & Artificial Intelligence (CSAI)  
+🏛️ Indian Institute of Information Technology (IIIT), Lucknow  
 
-Shikhar Agarwal
-B.Tech (CSAI) – IIIT Lucknow
-
-### Calendar Lock Screen
-![Calendar](screenshots/PseudoCalendar.jpeg)
-
-### Home Screen
-![Home](screenshots/HomePage.jpeg)
-
-### Fake Call
-![Fake Call](screenshots/FakeCall.jpeg)
-
-
+[![GitHub](https://img.shields.io/badge/GitHub-Shikhar1206-black?style=flat&logo=github)](https://github.com/Shikhar1206)
